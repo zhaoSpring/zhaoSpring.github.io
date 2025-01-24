@@ -48,9 +48,11 @@
 <img  src="/images/nanie.jpg" width="200" />
 </p>
 ]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
       <tags>
         <tag>JavaScript</tag>
-        <tag>生活随记</tag>
       </tags>
   </entry>
   <entry>
@@ -194,8 +196,11 @@ $$摘要 = 签名 ^E mod N$$
 <p align = "center">    
 <img  src="/images/nanie.jpg" width="200" />
 </p>]]></content>
+      <categories>
+        <category>algorithm</category>
+      </categories>
       <tags>
-        <tag>JavaScript</tag>
+        <tag>algorithm</tag>
       </tags>
   </entry>
 </search>
