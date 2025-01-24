@@ -1,61 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>export和export default的差异</title>
-    <url>/2025/01/20/export/</url>
-    <content><![CDATA[<h1>总结</h1>
-<h2 id="相同">相同</h2>
-<ol>
-<li>在ES6中，<code>export</code>和<code>export default</code>都可以导出变量、常量、函数、类、模块等；</li>
-<li><code>export</code>和<code>export default</code>导出的内容都可以使用<code>import</code>来导入。</li>
-</ol>
-<h2 id="区别">区别</h2>
-<ol>
-<li>一个模块可以声明多个<code>export</code>，但只能声明一个<code>export default</code>；</li>
-<li><code>export</code>暴露的是一个接口，可以导出多个值；<code>export default</code>暴露的是一个变量，只能导出一个值；</li>
-<li>使用<code>export</code>导出时，<code>import</code>需要使用<code>&#123;&#125;</code>；使用<code>export default</code>导出时，<code>import</code>不需要使用<code>&#123;&#125;</code>。</li>
-</ol>
-<hr>
-<h1>export</h1>
-<p>要了解<code>export</code>和<code>export default</code>的区别，首先要了解<code>export</code>的基本概念。每个模块都是独立的文件。如果外部模块想要访问模块内部的变量或者或者函数，就必须使用<code>import</code>导入这些内容。<code>export</code>命名规定是<strong>对外的接口</strong>，必须与模块内部的变量一一对应。<br>
-<code>export</code>有两种导出方式：</p>
-<ol>
-<li>具名导出</li>
-<li>默认导出（即 <code>default export</code>）</li>
-</ol>
-<p><strong>一个模块中可以声明多个具名导出<code>export</code>，但是只能有一个默认导出<code>default export</code>。</strong></p>
-<h2 id="具名导出">具名导出</h2>
-<p><code>export</code>可以直接导出模块内声明的变量、常量、函数、类等，也可以导出模块内声明的其他模块。通常情况下，使用<code>export</code>导出的变量名可以直接使用，如果想要修改变量名可以使用<code>as</code>关键字进行修改</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 写法一：导出声明</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> name1, name2<span class="comment">/*, … */</span>; <span class="comment">// also var</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name1 = <span class="number">1</span>, name2 = <span class="number">2</span><span class="comment">/*, … */</span>; <span class="comment">// also var, let</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">functionName</span>(<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">ClassName</span> &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span>* <span class="title function_">generatorFunctionName</span>(<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> &#123; name1, <span class="attr">name2</span>: bar &#125; = o;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> [ name1, name2 ] = array;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法二：导出列表</span></span><br><span class="line"><span class="keyword">export</span> &#123; name1, <span class="comment">/* …, */</span> nameN &#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; variable1 <span class="keyword">as</span> name1, variable2 <span class="keyword">as</span> name2, <span class="comment">/* …, */</span> nameN &#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; variable1 <span class="keyword">as</span> <span class="string">&quot;string name&quot;</span> &#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; name1 <span class="keyword">as</span> <span class="keyword">default</span> <span class="comment">/*, … */</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法三：导出模块合集</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">as</span> name1 <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; name1, <span class="comment">/* …, */</span> nameN &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; import1 <span class="keyword">as</span> name1, import2 <span class="keyword">as</span> name2, <span class="comment">/* …, */</span> nameN &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; <span class="keyword">default</span>, <span class="comment">/* …, */</span> &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; <span class="keyword">default</span> <span class="keyword">as</span> name1 &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br></pre></td></tr></table></figure>
-<p>模块外可以通过<code>import</code>导入<code>export</code>声明的内容：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 具名导入：</span></span><br><span class="line"><span class="keyword">import</span> &#123; export1 &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; export1 <span class="keyword">as</span> alias1 &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">default</span> <span class="keyword">as</span> alias &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; export1, export2 &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; export1, export2 <span class="keyword">as</span> alias2, <span class="comment">/* … */</span> &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="string">&quot;string name&quot;</span> <span class="keyword">as</span> alias &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br></pre></td></tr></table></figure>
-<p><strong>使用<code>import</code>导入时，注意需要使用<code>&#123;&#125;</code>。因为<code>export</code>暴露的是一个接口，可以导出多个值</strong></p>
-<hr>
-<h1>export default</h1>
-<p><code>export</code>还有一种写法，即<code>export default</code>，它用于声明模块的默认导出。一个模块只能有一个默认导出，所以<code>export defalut</code>只能使用一次。</p>
-<h2 id="默认导出">默认导出</h2>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 写法四：默认导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> expression;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">functionName</span>(<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">ClassName</span> &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>* <span class="title function_">generatorFunctionName</span>(<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>* () &#123; <span class="comment">/* … */</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>模块外可以通过<code>import</code>导入<code>export</code>声明的内容：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 默认导入：</span></span><br><span class="line"><span class="keyword">import</span> defaultExport <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br></pre></td></tr></table></figure>
-<p><strong>使用<code>import</code>时不需要加<code>&#123;&#125;</code>，因为<code>export default</code>暴露的是一个变量，只导出一个值。</strong></p>
-<hr>
-<blockquote>
-<p>参考：<br>
-<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export</a><br>
-<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import</a></p>
-</blockquote>
-<p align = "center">    
-<img  src="/images/nanie.jpg" width="200" />
-</p>
-]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>密码算法RSA、AES的介绍与js实现</title>
     <url>/2025/01/16/rsa-aes/</url>
     <content><![CDATA[<h1>RSA算法</h1>
@@ -201,6 +146,61 @@ $$摘要 = 签名 ^E mod N$$
       </categories>
       <tags>
         <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>export和export default的差异</title>
+    <url>/2025/01/20/export/</url>
+    <content><![CDATA[<h1>总结</h1>
+<h2 id="相同">相同</h2>
+<ol>
+<li>在ES6中，<code>export</code>和<code>export default</code>都可以导出变量、常量、函数、类、模块等；</li>
+<li><code>export</code>和<code>export default</code>导出的内容都可以使用<code>import</code>来导入。</li>
+</ol>
+<h2 id="区别">区别</h2>
+<ol>
+<li>一个模块可以声明多个<code>export</code>，但只能声明一个<code>export default</code>；</li>
+<li><code>export</code>暴露的是一个接口，可以导出多个值；<code>export default</code>暴露的是一个变量，只能导出一个值；</li>
+<li>使用<code>export</code>导出时，<code>import</code>需要使用<code>&#123;&#125;</code>；使用<code>export default</code>导出时，<code>import</code>不需要使用<code>&#123;&#125;</code>。</li>
+</ol>
+<hr>
+<h1>export</h1>
+<p>要了解<code>export</code>和<code>export default</code>的区别，首先要了解<code>export</code>的基本概念。每个模块都是独立的文件。如果外部模块想要访问模块内部的变量或者或者函数，就必须使用<code>import</code>导入这些内容。<code>export</code>命名规定是<strong>对外的接口</strong>，必须与模块内部的变量一一对应。<br>
+<code>export</code>有两种导出方式：</p>
+<ol>
+<li>具名导出</li>
+<li>默认导出（即 <code>default export</code>）</li>
+</ol>
+<p><strong>一个模块中可以声明多个具名导出<code>export</code>，但是只能有一个默认导出<code>default export</code>。</strong></p>
+<h2 id="具名导出">具名导出</h2>
+<p><code>export</code>可以直接导出模块内声明的变量、常量、函数、类等，也可以导出模块内声明的其他模块。通常情况下，使用<code>export</code>导出的变量名可以直接使用，如果想要修改变量名可以使用<code>as</code>关键字进行修改</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 写法一：导出声明</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> name1, name2<span class="comment">/*, … */</span>; <span class="comment">// also var</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name1 = <span class="number">1</span>, name2 = <span class="number">2</span><span class="comment">/*, … */</span>; <span class="comment">// also var, let</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">functionName</span>(<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> <span class="title class_">ClassName</span> &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span>* <span class="title function_">generatorFunctionName</span>(<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> &#123; name1, <span class="attr">name2</span>: bar &#125; = o;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> [ name1, name2 ] = array;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法二：导出列表</span></span><br><span class="line"><span class="keyword">export</span> &#123; name1, <span class="comment">/* …, */</span> nameN &#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; variable1 <span class="keyword">as</span> name1, variable2 <span class="keyword">as</span> name2, <span class="comment">/* …, */</span> nameN &#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; variable1 <span class="keyword">as</span> <span class="string">&quot;string name&quot;</span> &#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; name1 <span class="keyword">as</span> <span class="keyword">default</span> <span class="comment">/*, … */</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法三：导出模块合集</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">as</span> name1 <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; name1, <span class="comment">/* …, */</span> nameN &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; import1 <span class="keyword">as</span> name1, import2 <span class="keyword">as</span> name2, <span class="comment">/* …, */</span> nameN &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; <span class="keyword">default</span>, <span class="comment">/* …, */</span> &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">export</span> &#123; <span class="keyword">default</span> <span class="keyword">as</span> name1 &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>模块外可以通过<code>import</code>导入<code>export</code>声明的内容：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 具名导入：</span></span><br><span class="line"><span class="keyword">import</span> &#123; export1 &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; export1 <span class="keyword">as</span> alias1 &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">default</span> <span class="keyword">as</span> alias &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; export1, export2 &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; export1, export2 <span class="keyword">as</span> alias2, <span class="comment">/* … */</span> &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="string">&quot;string name&quot;</span> <span class="keyword">as</span> alias &#125; <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>使用<code>import</code>导入时，注意需要使用<code>&#123;&#125;</code>。因为<code>export</code>暴露的是一个接口，可以导出多个值</strong></p>
+<hr>
+<h1>export default</h1>
+<p><code>export</code>还有一种写法，即<code>export default</code>，它用于声明模块的默认导出。一个模块只能有一个默认导出，所以<code>export defalut</code>只能使用一次。</p>
+<h2 id="默认导出">默认导出</h2>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 写法四：默认导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> expression;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">functionName</span>(<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">ClassName</span> &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>* <span class="title function_">generatorFunctionName</span>(<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> &#123; <span class="comment">/* … */</span> &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>* () &#123; <span class="comment">/* … */</span> &#125;</span><br></pre></td></tr></table></figure>
+<p>模块外可以通过<code>import</code>导入<code>export</code>声明的内容：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 默认导入：</span></span><br><span class="line"><span class="keyword">import</span> defaultExport <span class="keyword">from</span> <span class="string">&quot;module-name&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>使用<code>import</code>时不需要加<code>&#123;&#125;</code>，因为<code>export default</code>暴露的是一个变量，只导出一个值。</strong></p>
+<hr>
+<blockquote>
+<p>参考：<br>
+<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export</a><br>
+<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import</a></p>
+</blockquote>
+<p align = "center">    
+<img  src="/images/nanie.jpg" width="200" />
+</p>
+]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
 </search>
