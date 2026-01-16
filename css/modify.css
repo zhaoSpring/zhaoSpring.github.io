@@ -70,3 +70,7 @@
 [data-theme='dark']:root {
   --card-bg: rgba(18,18,18,0.9) !important;
 }
+.post-content > ol {
+  margin-left: 12px;
+  padding-left: 0;
+}
